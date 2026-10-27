@@ -180,3 +180,12 @@
   - GET /api/posts/18 → `404 NOT_FOUND` (실제 삭제 확인)
 - 의미: 권한 검사가 특정 사용자(Alice)만 통과시키는 것이 아니라 "작성자 본인"이면 누구든 통과시킴
 - 증거: `evidence/T17_curl.txt`
+
+## 새 폴더 clone 재현 확인
+
+- 조건: GitHub 공개 저장소를 새 폴더 `~/Desktop/clone-test`에 clone하고 루트 README의 명령만 따라 실행 (2026-10-27)
+- 백엔드: `env.example.txt`에서 새 키로 `.env` 생성 → `./mvnw -q -DskipTests package` → `java -jar target/jwt-board-1.0.0.jar`. clone 폴더 경로에서 `Tomcat started on port 8000`, `Started BoardApplication` 확인. `data/board.sqlite`가 자동 생성됨
+- 프론트: `npm ci` → `npm run build` → `npm run preview`. `✓ built in 99ms`, `Local: http://127.0.0.1:4173/` 확인
+- 화면: 새 DB라 빈 목록에서 시작 → Alice 로그인 → 리뷰 "클론 테스트에용" 등록 → POST http://127.0.0.1:4173/api/posts `201 Created`, `Location: /api/posts/1`(새 DB의 첫 글), 요청에 `Authorization: Bearer <TOKEN>`(가림). 목록 1개, "내 리뷰"와 수정·삭제 버튼 표시
+- 참고: 터미널 캡처 2장은 화면 확인(19:44) 뒤 같은 clone 폴더에서 다시 실행(19:47)한 화면이라 첫 실행의 `npm ci` 출력은 포함되지 않음
+- 증거: `evidence/CLONE_backend_started.png`, `CLONE_frontend_build_preview.png`, `CLONE_screen_working.png`
