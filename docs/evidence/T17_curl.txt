@@ -1,0 +1,34 @@
+### 대상: Bob 글 10번 원문
+{"id":10,"title":"재밌습니다","content":"좋아요","authorId":2,"authorName":"Bob","createdAt":"2026-10-26T07:32:59.436219Z","updatedAt":"2026-10-26T07:32:59.436219Z"}
+
+##### 토큰 없이 수정·삭제 → 401 TOKEN_REQUIRED 기대
+--- PUT /api/posts/10 (Authorization 없음)
+HTTP/1.1 401 
+WWW-Authenticate: Bearer
+{"code":"TOKEN_REQUIRED","message":"로그인이 필요합니다."}
+
+--- DELETE /api/posts/10 (Authorization 없음)
+HTTP/1.1 401 
+WWW-Authenticate: Bearer
+{"code":"TOKEN_REQUIRED","message":"로그인이 필요합니다."}
+
+### 10번 원문 재조회
+{"id":10,"title":"재밌습니다","content":"좋아요","authorId":2,"authorName":"Bob","createdAt":"2026-10-26T07:32:59.436219Z","updatedAt":"2026-10-26T07:32:59.436219Z"}
+
+##### Bob 본인 글 작성 → 수정 → 삭제 (Authorization: Bearer <TOKEN>)
+--- POST /api/posts → 201 기대
+HTTP/1.1 201 
+Location: /api/posts/18
+{"id":18,"title":"Bob의 T17 리뷰","content":"하치와레가 귀여웠어요","authorId":2,"authorName":"Bob","createdAt":"2026-10-27T10:04:15.100217Z","updatedAt":"2026-10-27T10:04:15.100217Z"}
+
+--- PUT /api/posts/18 → 200 기대
+HTTP/1.1 200 
+{"id":18,"title":"Bob의 T17 리뷰 (수정)","content":"우사기도 귀여웠어요","authorId":2,"authorName":"Bob","createdAt":"2026-10-27T10:04:15.100217Z","updatedAt":"2026-10-27T10:04:15.132722Z"}
+
+--- DELETE /api/posts/18 → 204 기대
+HTTP/1.1 204 
+
+--- GET /api/posts/18 (삭제 확인) → 404 기대
+HTTP/1.1 404 
+{"code":"NOT_FOUND","message":"게시글이 없습니다."}
+

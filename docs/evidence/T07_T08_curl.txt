@@ -1,0 +1,24 @@
+### 요청 전 원문 (GET /api/posts/9)
+{"id":9,"title":"잔혹동화","content":"어린아이들이 볼 수 있을까 싶을 수준의 내용입니다","authorId":1,"authorName":"Alice","createdAt":"2026-10-26T07:27:39.923339Z","updatedAt":"2026-10-26T07:27:39.923339Z"}
+
+### Bob 확인 (GET /api/me, Authorization: Bearer <TOKEN>)
+{"id":2,"name":"Bob","email":"bob@class.test"}
+
+### T07: Bob이 Alice 글 수정 (PUT /api/posts/9, Authorization: Bearer <TOKEN>)
+HTTP/1.1 403 
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 27 Oct 2026 08:00:22 GMT
+
+{"message":"본인이 작성한 글만 수정·삭제할 수 있습니다.","code":"FORBIDDEN"}
+
+### T08: Bob이 Alice 글 삭제 (DELETE /api/posts/9, Authorization: Bearer <TOKEN>)
+HTTP/1.1 403 
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 27 Oct 2026 08:00:22 GMT
+
+{"message":"본인이 작성한 글만 수정·삭제할 수 있습니다.","code":"FORBIDDEN"}
+
+### 요청 후 원문 (GET /api/posts/9)
+{"id":9,"title":"잔혹동화","content":"어린아이들이 볼 수 있을까 싶을 수준의 내용입니다","authorId":1,"authorName":"Alice","createdAt":"2026-10-26T07:27:39.923339Z","updatedAt":"2026-10-26T07:27:39.923339Z"}

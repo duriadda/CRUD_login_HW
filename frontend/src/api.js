@@ -1,12 +1,14 @@
-// TODO FE-01~04: 공통 API 명세와 구현 체크리스트를 보고 완성하세요.
+// 로그인 상태는 이 탭의 메모리에만 둔다. localStorage·sessionStorage는 사용하지 않는다.
 let session = { accessToken: "", user: null };
 export const getSession = () => session;
 export function clearSession() {
   session = { accessToken: "", user: null };
 }
+// FE-02: 토큰이 있을 때만 Bearer 헤더를 만든다. 없으면 헤더 자체를 보내지 않는다.
 function authorizationHeaders() {
-  // TODO FE-02: 메모리에 보관한 토큰을 Bearer 헤더로 보내세요.
-  return {};
+  return session.accessToken
+    ? { Authorization: `Bearer ${session.accessToken}` }
+    : {};
 }
 export async function request(path, options = {}) {
   const response = await fetch(`/api${path}`, {
@@ -17,26 +19,34 @@ export async function request(path, options = {}) {
       ...options.headers,
     },
   });
-  const data = response.status === 204 ? null : await response.json();
+  // 204는 본문이 없으므로 파싱하지 않는다. JSON이 아닌 오류 본문(프록시 오류 등)도 null로 둔다.
+  const data =
+    response.status === 204 ? null : await response.json().catch(() => null);
   if (!response.ok) {
-    // TODO FE-03: 401이면 메모리의 로그인 상태도 해제하세요.
+    // FE-03: 401은 토큰이 더 이상 쓸 수 없다는 뜻이므로 메모리의 로그인 상태를 해제한다.
+    // 403은 인증은 유효하고 권한만 없는 것이므로 로그인 상태를 유지한다.
+    if (response.status === 401) clearSession();
     const error = new Error(
-      data.message || data.code || `HTTP ${response.status}`,
+      data?.message || data?.code || `HTTP ${response.status}`,
     );
     error.status = response.status;
-    error.code = data.code;
+    error.code = data?.code;
     throw error;
   }
   return data;
 }
+// FE-01: 성공 응답의 토큰과 사용자를 메모리에 저장한다. 실패하면 request()가 예외를 던진다.
 export async function login(email, password) {
-  // TODO FE-01: POST /auth/login → 응답의 토큰과 사용자 정보를 session에 저장.
-  // request()를 이용할 수 있습니다. 성공하면 user를 반환하세요.
-  throw new Error("로그인 연결은 학생 구현 항목입니다. FE-01을 완성하세요.");
+  const data = await request("/auth/login", {
+    method: "POST",
+    body: JSON.stringify({ email, password }),
+  });
+  session = { accessToken: data.accessToken, user: data.user };
+  return data.user;
 }
+// FE-04: 화면 표시용 판단일 뿐이며, 실제 권한 검사는 서버의 assertOwner가 한다.
 export function canEdit(post) {
-  // TODO FE-04: 로그인 사용자와 작성자를 비교하세요. 서버 검사도 반드시 필요합니다.
-  return true; // 시작 코드에서는 CRUD를 체험할 수 있도록 모두 표시합니다.
+  return Boolean(session.user && post && session.user.id === post.authorId);
 }
 export const api = {
   list: () => request("/posts"),

@@ -1,0 +1,47 @@
+### 요청 전 13번 원문
+{"id":13,"title":"T05 테스트","content":"테스트","authorId":1,"authorName":"Alice","createdAt":"2026-10-27T07:52:34.202725Z","updatedAt":"2026-10-27T07:52:34.202725Z"}
+
+##### T14 기본
+--- GET /api/posts/99999 (없는 글, 토큰 없음)
+HTTP/1.1 404 
+{"code":"NOT_FOUND","message":"게시글이 없습니다."}
+
+--- PUT /api/posts/99999 (없는 글, Alice 토큰)
+HTTP/1.1 404 
+{"code":"NOT_FOUND","message":"게시글이 없습니다."}
+
+--- DELETE /api/posts/99999 (없는 글, Alice 토큰)
+HTTP/1.1 404 
+{"code":"NOT_FOUND","message":"게시글이 없습니다."}
+
+--- GET /api/posts/abc (잘못된 ID)
+HTTP/1.1 400 
+{"code":"BAD_INPUT","message":"ID는 양의 정수여야 합니다."}
+
+--- GET /api/posts/0 (양수가 아닌 ID)
+HTTP/1.1 400 
+{"code":"BAD_INPUT","message":"ID는 양의 정수여야 합니다."}
+
+--- GET /api/posts/-1 (음수 ID)
+HTTP/1.1 400 
+{"code":"BAD_INPUT","message":"ID는 양의 정수여야 합니다."}
+
+##### 여러 조건이 겹칠 때 (공지 예시)
+--- 토큰 없이 없는 글 수정 → 401 TOKEN_REQUIRED 기대
+HTTP/1.1 401 
+{"code":"TOKEN_REQUIRED","message":"로그인이 필요합니다."}
+
+--- 정상 토큰으로 같은 없는 글 수정 → 404 NOT_FOUND 기대
+HTTP/1.1 404 
+{"code":"NOT_FOUND","message":"게시글이 없습니다."}
+
+--- Bob이 Alice 글에 공백 제목 → 403 FORBIDDEN 기대
+HTTP/1.1 403 
+{"code":"FORBIDDEN","message":"본인이 작성한 글만 수정·삭제할 수 있습니다."}
+
+--- Alice가 자기 글에 공백 제목 → 400 BAD_INPUT 기대
+HTTP/1.1 400 
+{"code":"BAD_INPUT","message":"title 입력을 확인하세요."}
+
+### 요청 후 13번 원문
+{"id":13,"title":"T05 테스트","content":"테스트","authorId":1,"authorName":"Alice","createdAt":"2026-10-27T07:52:34.202725Z","updatedAt":"2026-10-27T07:52:34.202725Z"}

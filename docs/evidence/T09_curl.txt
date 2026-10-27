@@ -1,0 +1,45 @@
+### 변조 확인: 서명 첫 글자 T → A, 길이 183 / 183
+### 글 개수: 4
+### 요청 전 원문 (GET /api/posts/13)
+{"id":13,"title":"T05 테스트","content":"테스트","authorId":1,"authorName":"Alice","createdAt":"2026-10-27T07:52:34.202725Z","updatedAt":"2026-10-27T07:52:34.202725Z"}
+
+### 대조군: 정상 토큰 GET /api/me
+HTTP 200
+
+### 서명 첫 글자 변조 토큰 (Authorization: Bearer <TAMPERED>)
+--- GET /api/me
+HTTP/1.1 401 
+WWW-Authenticate: Bearer
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 27 Oct 2026 08:43:21 GMT
+
+{"message":"유효하지 않은 토큰입니다.","code":"INVALID_TOKEN"}
+--- POST /api/posts
+HTTP/1.1 401 
+WWW-Authenticate: Bearer
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 27 Oct 2026 08:43:21 GMT
+
+{"message":"유효하지 않은 토큰입니다.","code":"INVALID_TOKEN"}
+--- PUT /api/posts/13
+HTTP/1.1 401 
+WWW-Authenticate: Bearer
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 27 Oct 2026 08:43:21 GMT
+
+{"message":"유효하지 않은 토큰입니다.","code":"INVALID_TOKEN"}
+--- DELETE /api/posts/13
+HTTP/1.1 401 
+WWW-Authenticate: Bearer
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 27 Oct 2026 08:43:21 GMT
+
+{"message":"유효하지 않은 토큰입니다.","code":"INVALID_TOKEN"}
+
+### 요청 후 원문 (GET /api/posts/13)
+{"id":13,"title":"T05 테스트","content":"테스트","authorId":1,"authorName":"Alice","createdAt":"2026-10-27T07:52:34.202725Z","updatedAt":"2026-10-27T07:52:34.202725Z"}
+### 글 개수: 4

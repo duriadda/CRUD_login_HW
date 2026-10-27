@@ -1,0 +1,32 @@
+### 요청 전 글 개수: 4
+### 생성한 문자열 길이: 제목 101자, 내용 5001자
+
+--- 빈 제목 ("")
+HTTP/1.1 400 
+{"code":"BAD_INPUT","message":"title 입력을 확인하세요."}
+
+--- 공백만 있는 제목 ("   ")
+HTTP/1.1 400 
+{"code":"BAD_INPUT","message":"title 입력을 확인하세요."}
+
+--- 공백만 있는 본문
+HTTP/1.1 400 
+{"code":"BAD_INPUT","message":"content 입력을 확인하세요."}
+
+--- 제목 101자
+HTTP/1.1 400 
+{"code":"BAD_INPUT","message":"title 입력을 확인하세요."}
+
+--- 내용 5001자
+HTTP/1.1 400 
+{"code":"BAD_INPUT","message":"content 입력을 확인하세요."}
+
+--- 제목이 문자열이 아님 (숫자)
+HTTP/1.1 400 
+{"code":"BAD_INPUT","message":"문자열을 입력하세요."}
+
+--- content 필드 누락
+HTTP/1.1 400 
+{"code":"BAD_INPUT","message":"문자열을 입력하세요."}
+
+### 요청 후 글 개수: 4

@@ -1,0 +1,22 @@
+### 요청 전 목록: 4 개 / [(13, 'Alice', 'T05 테스트'), (10, 'Bob', '재밌습니다'), (9, 'Alice', '잔혹동화'), (8, 'Alice', '재시작 유지 확인용')]
+### Bob 확인: {"id":2,"name":"Bob","email":"bob@class.test"}
+
+--- POST /api/posts  본문에 "authorId":1 추가 (Authorization: Bearer <TOKEN>)
+HTTP/1.1 400 
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 27 Oct 2026 08:59:47 GMT
+Connection: close
+
+{"code":"BAD_INPUT","message":"허용된 JSON 필드만 보내세요."}
+
+--- POST /api/posts  본문에 "userId":1 추가 (Authorization: Bearer <TOKEN>)
+HTTP/1.1 400 
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 27 Oct 2026 08:59:47 GMT
+Connection: close
+
+{"code":"BAD_INPUT","message":"허용된 JSON 필드만 보내세요."}
+
+### 요청 후 목록: 4 개 / [(13, 'Alice', 'T05 테스트'), (10, 'Bob', '재밌습니다'), (9, 'Alice', '잔혹동화'), (8, 'Alice', '재시작 유지 확인용')]

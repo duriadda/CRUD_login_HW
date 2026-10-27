@@ -4,8 +4,8 @@
     -apple-system,
     "Apple SD Gothic Neo",
     sans-serif;
-  color: #17233a;
-  background: #f2f5f9;
+  color: #2d2a3a;
+  background: #fdf6f8;
   font-synthesis: none;
 }
 * {
@@ -37,14 +37,14 @@ p {
 .eyebrow {
   font-size: 12px;
   letter-spacing: 0.12em;
-  color: #416198;
+  color: #d0648a;
   font-weight: 700;
 }
 .banner {
   padding: 12px 16px;
   border-radius: 10px;
-  background: #fff1d5;
-  color: #654c16;
+  background: #e8f4fb;
+  color: #24506b;
   line-height: 1.6;
 }
 .grid {
@@ -55,7 +55,7 @@ p {
 }
 .card {
   background: white;
-  border: 1px solid #dfe5ee;
+  border: 1px solid #f1dde4;
   border-radius: 14px;
   padding: 22px;
   margin-bottom: 20px;
@@ -81,7 +81,7 @@ textarea {
   resize: vertical;
 }
 button {
-  background: #2455ad;
+  background: #d0648a;
   border: 0;
   border-radius: 7px;
   color: white;
@@ -91,8 +91,8 @@ button {
   font-size: 14px;
 }
 button.secondary {
-  background: #e9eef7;
-  color: #27416c;
+  background: #fbe9ef;
+  color: #8a3557;
 }
 button.danger {
   background: #b83b47;
@@ -115,7 +115,7 @@ button:disabled {
 }
 .post-title {
   padding: 0;
-  color: #234d94;
+  color: #3a6d8c;
   background: transparent;
   font-size: 17px;
   font-weight: 700;
@@ -126,7 +126,7 @@ small,
   color: #61718a;
 }
 .message {
-  background: #e6eefb;
+  background: #f3f0f6;
   padding: 12px 16px;
   border-radius: 8px;
   margin: 16px 0;
@@ -143,4 +143,55 @@ small,
   main {
     padding: 24px 16px;
   }
+}
+body {
+  background: #fdf6f8;
+}
+.message.success {
+  background: #e7f6ec;
+  color: #24613a;
+}
+.message.error {
+  background: #fde8e8;
+  color: #9b2c2c;
+}
+.who {
+  margin-top: 0;
+}
+.login-guide {
+  padding: 14px;
+  border-radius: 8px;
+  background: #fbe9ef;
+  color: #8a3557;
+  margin: 0;
+}
+.count {
+  display: block;
+  text-align: right;
+  font-weight: 400;
+  margin-top: 4px;
+}
+button.chip {
+  background: transparent;
+  border: 1px solid #e5b9c9;
+  color: #8a3557;
+  padding: 5px 10px;
+  margin: 6px 6px 0 0;
+  font-size: 13px;
+}
+.post.active .post-title {
+  color: #d0648a;
+}
+.mine {
+  margin-left: 6px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: #fbe9ef;
+  color: #8a3557;
+  font-size: 12px;
+}
+.confirm {
+  align-self: center;
+  font-size: 14px;
+  color: #9b2c2c;
 }

@@ -1,0 +1,23 @@
+### 등록 전 글 개수
+3
+
+$ curl -i http://127.0.0.1:8000/api/me   (Authorization 헤더 없음)
+HTTP/1.1 401 
+WWW-Authenticate: Bearer
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 27 Oct 2026 07:44:19 GMT
+
+{"message":"로그인이 필요합니다.","code":"TOKEN_REQUIRED"}
+
+$ curl -i -X POST http://127.0.0.1:8000/api/posts   (Authorization 헤더 없음)
+HTTP/1.1 401 
+WWW-Authenticate: Bearer
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 27 Oct 2026 07:44:19 GMT
+
+{"message":"로그인이 필요합니다.","code":"TOKEN_REQUIRED"}
+
+### 등록 시도 후 글 개수
+3
