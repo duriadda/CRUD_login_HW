@@ -7,3 +7,7 @@ target/
 data/
 .env
 .DS_Store
+
+# 개인 작업 메모 (저장소에 올리지 않음)
+docs/PROGRESS.md
+docs/report-notes.md
